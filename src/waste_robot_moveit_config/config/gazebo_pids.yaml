@@ -1,0 +1,4 @@
+gazebo_ros_control:
+  pid_gains:
+    shoulder_joint: {p: 100.0, i: 0.01, d: 10.0}
+    elbow_joint: {p: 100.0, i: 0.01, d: 10.0}

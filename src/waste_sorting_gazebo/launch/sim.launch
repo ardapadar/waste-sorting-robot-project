@@ -1,0 +1,27 @@
+<launch>
+<!-- <rosparam file="$(find waste_robot_moveit_config)/config/gazebo_pids.yaml" command="load"/> -->
+  <!-- 1. Boş dünyayı ve senin özel dünyanı başlatır -->
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="world_name" value="$(find waste_sorting_gazebo)/worlds/waste_sorting.world" />
+    <arg name="paused" value="false" />
+    <arg name="use_sim_time" value="true" />
+    <arg name="gui" value="true" />
+    <arg name="headless" value="false" />
+    <arg name="debug" value="false" />
+  </include>
+
+  <!-- 2. Robotun URDF dosyasını sisteme tanıtır -->
+  <param name="robot_description" textfile="$(find waste_sorting_description)/urdf/waste_robot.urdf" />
+
+  <!-- 3. Robotu Gazebo'da istediğin koordinatta oluşturur -->
+  <!-- -x, -y, -z değerlerini robotun konveyöre olan uzaklığına göre değiştirebilirsin -->
+  <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" 
+        args="-param robot_description -urdf -model waste_robot -x 0.0 -y 0.0 -z 0.0" 
+        output="screen" />
+        <!-- 4. Robot eklem controllerlarını yükler -->
+<rosparam file="$(find waste_robot_moveit_config)/config/ros_controllers.yaml" command="load"/>
+
+<node name="controller_spawner" pkg="controller_manager" type="spawner"
+      args="joint_state_controller arm_controller"
+      output="screen" />
+</launch>

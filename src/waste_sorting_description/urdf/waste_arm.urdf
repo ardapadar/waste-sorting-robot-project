@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<robot name="waste_robot">
+  <link name="base_link">
+    <visual>
+      <geometry>
+        <box size="0.2 0.2 0.2"/>
+      </geometry>
+      <material name="blue"><color rgba="0 0 1 1"/></material>
+    </visual>
+  </link>
+  
+  <joint name="joint1" type="revolute">
+    <parent link="base_link"/>
+    <child link="arm_link"/>
+    <origin xyz="0 0 0.1"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="30" velocity="1.0" lower="-1.57" upper="1.57"/>
+  </joint>
+
+  <link name="arm_link">
+    <visual>
+      <geometry>
+        <cylinder length="0.4" radius="0.05"/>
+      </geometry>
+      <origin xyz="0 0 0.2"/>
+    </visual>
+  </link>
+</robot>
